@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect } from 'react'
+import {
+  BrowserRouter as Router,
+  Switch, Route
+} from "react-router-dom"
+import { useDispatch } from 'react-redux'
+import Container from '@material-ui/core/Container'
+import ButtonMenu from './components/ButtonMenu'
+import ProductsList from './components/ProductsList'
+import { initializeGloves } from './reducers/glovesReducer'
+import { initializeFacemasks } from './reducers/facemasksReducer'
+import { initializeBeanies } from './reducers/beaniesReducer'
+import './App.css'
 
-function App() {
+const App = () => {
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(initializeGloves())
+    dispatch(initializeFacemasks())
+    dispatch(initializeBeanies())
+  }, [dispatch])
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Router>
+        <ButtonMenu />
+        <Container>
+          <Switch>
+            <Route path='/products/:id'>
+              <ProductsList />
+            </Route>
+            <Route path='/products'>
+              <h1>Simple Warehouse App</h1>
+            </Route>
+            <Route path='/'>
+              <h1>Simple Warehouse App</h1>
+            </Route>
+          </Switch>
+        </Container>
+      </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

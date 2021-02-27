@@ -1,0 +1,14 @@
+.loading {
+  display: flex;
+  justify-content: center;
+}
+
+.productTitle {
+  display: flex;
+  justify-content: center;
+  text-transform: capitalize;
+}
+
+.table {
+  min-Width: 650;
+}
