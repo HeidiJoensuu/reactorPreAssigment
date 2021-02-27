@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const url = 'http://localhost:3001'
+const url = 'https://reactorpreassigment.herokuapp.com/'
 
 const getManufacturer = (manufacturer) => {
   const request = axios.get(`${url}/api/manu/${manufacturer}`)
