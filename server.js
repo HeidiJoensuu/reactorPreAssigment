@@ -7,7 +7,7 @@ const axios = require('axios')
 app.use(cors())
 app.use(express.json())
 
-const port = process.env.port || 3001
+const port = process.env.PORT || 3001
 const url = 'https://bad-api-assignment.reaktor.com/'
 app.use(express.static('build'))
 app.use('/', express.static(path.join(__dirname, 'build')))
