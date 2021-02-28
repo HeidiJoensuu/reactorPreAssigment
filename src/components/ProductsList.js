@@ -101,7 +101,7 @@ const ProductsList = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [manufacturerData, manufacturers, products])
+  }, [manufacturerData, manufacturers, producktTableCells, products])
 
   return (
     <div ref={ref}> 
