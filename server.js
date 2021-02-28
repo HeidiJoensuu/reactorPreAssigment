@@ -20,7 +20,7 @@ app.get('/api/manu/:manufacturer', async (req, res) => {
   res.send(request.data)
 })
 
-app.use('/', express.static(path.join(__dirname, 'build')))
+app.use('*', express.static(path.join(__dirname, 'build')))
 
 app.listen(port, () => {
   console.log(`Proxy server listening at http://localhost:${port}`)
