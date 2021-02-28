@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import _ from 'lodash'
 import { useParams } from "react-router-dom"
 import { useSelector, useDispatch } from 'react-redux'
-import { useScrollPercentage } from 'react-scroll-percentage'
 import './ProductsList.css'
 import { 
   Table,
@@ -27,9 +26,13 @@ const ProductsList = () => {
 
   const [index, setIndex] = useState(0)
   const [producktTableCells, setProducktTableCells] = useState([])
-  const [ref, percentage] = useScrollPercentage()
+  const targerRef = useRef()
   const [manufacturers, setManufacturers] = useState([])
-  
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const handleScroll = () => {
+      const position = window.innerHeight+window.scrollY;
+      setScrollPosition(position);
+  };
 
   try {
     if (products.length !== 0) {
@@ -66,7 +69,14 @@ const ProductsList = () => {
   }
 
   useEffect(() => {
-    if (Math.round(percentage * 100) >= 65){
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => {
+        window.removeEventListener('scroll', handleScroll);
+      };
+  }, []);
+
+  useEffect(() => {
+    if (scrollPosition > targerRef.current.offsetHeight){
       if ((products.length) > producktTableCells.length  && index < chunkki.length ) {
         try {
           setProducktTableCells([...producktTableCells, ...chunkki[index]])
@@ -76,7 +86,7 @@ const ProductsList = () => {
         }
       }
     }
-  }, [percentage, products])
+  }, [products, scrollPosition])
 
   useEffect(() => {
     if (manufacturers.length !== 0){
@@ -101,10 +111,10 @@ const ProductsList = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [manufacturerData, manufacturers, producktTableCells, products])
+  }, [manufacturerData, manufacturers, index, products])
 
   return (
-    <div ref={ref}> 
+    <div ref={targerRef}> 
       <h2 className="productTitle">{id}</h2>      
       {producktKeys && producktTableCells
       ? <>
