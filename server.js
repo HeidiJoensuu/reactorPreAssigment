@@ -10,8 +10,6 @@ app.use(express.json())
 const port = process.env.PORT || 3001
 const url = 'https://bad-api-assignment.reaktor.com/'
 app.use(express.static('build'))
-app.use('/', express.static(path.join(__dirname, 'build')))
-
 
 app.get('/api/product/:category', async (req, res) => {
   const request = await axios.get(`${url}v2/products/${req.params.category}`)
@@ -21,6 +19,8 @@ app.get('/api/manu/:manufacturer', async (req, res) => {
   const request = await axios.get(`${url}v2/availability/${req.params.manufacturer}`)
   res.send(request.data)
 })
+
+app.use('/', express.static(path.join(__dirname, 'build')))
 
 app.listen(port, () => {
   console.log(`Proxy server listening at http://localhost:${port}`)

@@ -22,7 +22,7 @@ const ProductsList = () => {
   const id = useParams().id
   const products = useSelector(state => state[id])
   const manufacturerData = useSelector(state => state["manufacturer"])
-  const chunkki = _.chunk(products, 25)
+  const chunkki = _.chunk(products, 30)
   let producktKeys = null
 
   const [index, setIndex] = useState(0)
@@ -66,7 +66,7 @@ const ProductsList = () => {
   }
 
   useEffect(() => {
-    if (Math.round(percentage * 100) >= 70){
+    if (Math.round(percentage * 100) >= 65){
       if ((products.length) > producktTableCells.length  && index < chunkki.length ) {
         try {
           setProducktTableCells([...producktTableCells, ...chunkki[index]])
